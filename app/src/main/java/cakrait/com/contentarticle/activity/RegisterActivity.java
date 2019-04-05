@@ -1,10 +1,12 @@
-package cakrait.com.contentarticle;
+package cakrait.com.contentarticle.activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+
+import cakrait.com.contentarticle.R;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -20,7 +22,7 @@ public class RegisterActivity extends AppCompatActivity {
         txt_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                 finish();
             }
         });
@@ -28,7 +30,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+        startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
         finish();
     }
 }
