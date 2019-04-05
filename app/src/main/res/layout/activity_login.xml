@@ -45,7 +45,8 @@
                     android:padding="10dp"
                     android:textColor="#fff"
                     android:textColorHint="#fff"
-                    android:textSize="25sp" />
+                    android:textSize="25sp"
+                    android:inputType="textPassword"/>
 
                 <Button
                     android:id="@+id/login"

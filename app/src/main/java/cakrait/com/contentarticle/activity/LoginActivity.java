@@ -10,6 +10,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import cakrait.com.contentarticle.R;
+import cakrait.com.contentarticle.model.retrofit.ResponseLogin;
+import cakrait.com.contentarticle.network.InitRetrofit;
+import cakrait.com.contentarticle.network.RestApi;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -33,8 +39,7 @@ public class LoginActivity extends AppCompatActivity {
                 if(email.getText().toString().equals("") || password.getText().toString().equals("")) {
                     Toast.makeText(LoginActivity.this, "Harap isi email dan password", Toast.LENGTH_SHORT).show();
                 } else {
-                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-                    finish();
+                    login();
                 }
             }
         });
@@ -47,4 +52,36 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void login() {
+        RestApi restApi = InitRetrofit.getInstance();
+
+        Call<ResponseLogin> loginCall = restApi.loginUser(
+            email.getText().toString(),
+            password.getText().toString()
+        );
+
+        loginCall.enqueue(new Callback<ResponseLogin>() {
+            @Override
+            public void onResponse(Call<ResponseLogin> call, Response<ResponseLogin> response) {
+                if(response.isSuccessful()) {
+                    String result = response.body().getResponse();
+
+                    if(result.equals("success")) {
+                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                        finish();
+                        Toast.makeText(LoginActivity.this, result, Toast.LENGTH_SHORT).show();
+                    } else if (result.equals("failed")) {
+                        Toast.makeText(LoginActivity.this, result, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseLogin> call, Throwable t) {
+                Toast.makeText(LoginActivity.this, "Periksa kembali koneksi anda", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 }
