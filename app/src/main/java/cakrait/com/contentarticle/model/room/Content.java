@@ -7,7 +7,7 @@ import android.arch.persistence.room.PrimaryKey;
 import java.io.Serializable;
 
 @Entity
-public class Content extends Serializable {
+public class Content implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
